@@ -1,6 +1,6 @@
 <template>
   <ul class="catalog__list">
-      <ProductItem :products="products">
+      <ProductItem :products="products"/>
   </ul>
 </template>
 

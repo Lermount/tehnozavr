@@ -54,6 +54,9 @@ export default {
   },
   methods: {
     paginate(page) {
+      if(page < 1 || page > (this.count / this.perPage)){
+        return;
+      }
       this.$emit("paginate", page);
     },
   },

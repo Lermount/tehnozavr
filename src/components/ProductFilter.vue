@@ -138,17 +138,19 @@
 <script>
     import categories from "../data/categories";
     import colors from "../data/colors";
+    import paginate from './BasePagination.vue';
 
     export default {
+      
         data(){
-            return {
-                currentPriceFrom: 0,
-                currentPriceTo: 0,
-                currentCategoryId: 0,
-                currentColorId: 0,
-            }
+          return {
+            currentPriceFrom: 0,
+            currentPriceTo: 0,
+            currentCategoryId: 0,
+            currentColorId: 0,
+          }
         },
-        props:['priceFrom', 'priceTo', 'categoryId', 'colorId'],
+        props:['priceFrom', 'priceTo', 'categoryId', 'colorId',],
         computed: {
             categories() {
                 return categories;
@@ -156,6 +158,10 @@
 
             colors() {
               return colors;
+            },
+
+            paginate() {
+              return paginate;
             },
         },
         watch: {
@@ -181,6 +187,7 @@
                 this.$emit('update:priceTo', this.currentPriceTo);
                 this.$emit('update:categoryId', this.currentCategoryId);
                 this.$emit('update:colorId', this.currentColorId);
+                this.$emit("update:paginate", 1)
             },
 
               reset(){

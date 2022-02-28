@@ -40,7 +40,6 @@
 </template>
 
 <script>
-
 export default {
   model: {
     prop: "page",
@@ -51,6 +50,9 @@ export default {
     pages() {
       return Math.ceil(this.count / this.perPage);
     },
+    felters() {
+      return filter;
+    }
   },
   methods: {
     paginate(page) {

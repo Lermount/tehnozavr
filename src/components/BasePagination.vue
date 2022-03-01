@@ -50,16 +50,14 @@ export default {
     pages() {
       return Math.ceil(this.count / this.perPage);
     },
-    felters() {
-      return filter;
-    }
   },
   methods: {
-    paginate(page) {
-      if(page < 1 || page > (this.count / this.perPage)){
-        return;
-      }
-      this.$emit("paginate", page);
+      paginate(page) {
+        if (page < 1 || page > this.pages) {
+            return;
+        };
+
+        this.$emit("paginate", page);
     },
   },
 };

@@ -39,7 +39,7 @@ export default {
       filterPriceTo: 0,
       filterCatrgoryId: 0,
       filterColorId: 0,
-
+      
       page: 1,
       productsPerPage: 3,
     };
@@ -82,5 +82,10 @@ export default {
       return this.filteredProducts.length;
     },
   },
+  watch:{
+    countProducts(){
+      this.page = 1;
+    }
+  }
 };
 </script>

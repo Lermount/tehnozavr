@@ -3,10 +3,10 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#" @click.prevent="gotoPage('main')"> Каталог </a>
+          <router-link class="breadcrumbs__link" :to="{name: 'main'}"> Каталог </router-link>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#"  @click.prevent="gotoPage('main')"> {{ category.title }} </a>
+          <router-link class="breadcrumbs__link" :to="{name: 'main'}"> {{ category.title }} </router-link>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link"> {{ product.title }} </a>
@@ -30,7 +30,7 @@
         <span class="item__code">Артикул: {{ product.id }}</span>
         <h2 class="item__title">{{ product.title }}</h2>
         <div class="item__form">
-          <form class="form" action="#" method="POST">
+          <form class="form" action="#" method="POST" @submit.prevent="addToCart">
             <b class="item__price"> {{ product.price | numberFormat }} ₽ </b>
 
             <fieldset class="form__block">
@@ -127,15 +127,15 @@
 
             <div class="item__row">
               <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button type="button" aria-label="Убрать один товар" @click="lessProduct">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count" />
+                <input type="text" v-model.number="productAmout" />
 
-                <button type="button" aria-label="Добавить один товар">
+                <button type="button" aria-label="Добавить один товар" @click="productAmout++">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
@@ -218,7 +218,11 @@ import gotoPage from "@/helpers/gotoPage";
 import numberFormat from "@/helpers/numberFormat";
 
 export default {
-  props: ["pageParams"],
+  data(){
+    return {
+      productAmout: 1,
+    }
+  },
 
   filters: {
     numberFormat
@@ -226,7 +230,7 @@ export default {
 
   computed: {
     product() {
-      return products.find((product) => product.id === this.pageParams.id);
+      return products.find((product) => product.id === +this.$route.params.id);
     },
 
     category() {
@@ -237,7 +241,21 @@ export default {
   },
 
   methods: {
-    gotoPage
+    gotoPage,
+    
+    addToCart() {
+      this.$store.commit(
+        'addProductToCart', 
+        {productId: this.product.id, amount: this.productAmout}
+      );
+    },
+    
+    lessProduct() {
+      if(this.productAmout <= 1){
+        return
+      }
+      this.productAmout--
+    }
   }
 };
 </script>

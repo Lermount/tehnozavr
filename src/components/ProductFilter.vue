@@ -182,8 +182,7 @@
                 this.$emit('update:priceTo', this.currentPriceTo);
                 this.$emit('update:categoryId', this.currentCategoryId);
                 this.$emit('update:colorId', this.currentColorId);
-                console.log(page)
-            },
+              },
 
               reset(){
                 this.$emit('update:priceFrom', 0);

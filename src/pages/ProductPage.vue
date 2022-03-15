@@ -133,7 +133,7 @@
                   </svg>
                 </button>
 
-                <input type="text" v-model.number="productAmout" />
+                <input type="text" pattern="[ 0-9]+$" v-model.number="productAmout" />
 
                 <button type="button" aria-label="Добавить один товар" @click="productAmout++">
                   <svg width="12" height="12" fill="currentColor">

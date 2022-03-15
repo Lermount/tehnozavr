@@ -26,12 +26,14 @@
   </main>
 </template>
 <script>
-import products from "@/data/products";
 import ProductList from "@/components/ProductList.vue";
 import BasePagination from "@/components/BasePagination.vue";
 import ProductFilter from "@/components/ProductFilter.vue";
+import axios from 'axios';
+import API_BASE_URL from "../config";
 
 export default {
+  
   components: { ProductList, BasePagination, ProductFilter },
   data() {
     return {
@@ -42,47 +44,69 @@ export default {
       
       page: 1,
       productsPerPage: 3,
+
+      productsData: null,
     };
   },
   computed: {
-    filteredProducts() {
-      let filteredProducts = products;
-
-      if (this.filterPriceFrom > 0) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price > this.filterPriceFrom
-        );
-      }
-
-      if (this.filterPriceTo > 0) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price < this.filterPriceTo
-        );
-      }
-
-      if (this.filterCatrgoryId) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.categoryId === this.filterCatrgoryId
-        );
-      }
-      if (this.filterColorId) {
-        filteredProducts = filteredProducts.filter((product) =>
-          product.colorIds.some((id) => id === this.filterColorId)
-        );
-      }
-
-      return filteredProducts;
-    },
     products() {
-      const offset = (this.page - 1) * this.productsPerPage;
-      return this.filteredProducts.slice(offset, offset + this.productsPerPage);
+      return this.productsData 
+      ? this.productsData.items.map(product => {
+        return {
+          ...product,
+          image: product.image.file.url
+        }
+      }) 
+      : [];
     },
 
     countProducts() {
-      return this.filteredProducts.length;
+      return this.productsData ? this.productsData.pagination.total : 0;
     },
   },
+
+  methods: {
+    loadProducts(){
+      console.log(API_BASE_URL);
+      axios
+        .get(API_BASE_URL + "/api/products", {
+          params: {
+            page: this.page,
+            limit: this.productsPerPage,
+            categoryId: this.filterCatrgoryId,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
+            colorId: this.filterColorId,
+          }
+        })
+        .then(response => this.productsData = response.data);
+    }
+  },
+  created() {
+    this.loadProducts();
+  },
+
   watch:{
+    page(){
+      this.loadProducts();
+    },
+
+    filterPriceFrom(){
+      this.loadProducts();
+    },
+
+    filterPriceTo(){
+      this.loadProducts();
+    },
+
+    filterCatrgoryId(){
+      this.loadProducts();
+    },
+
+    filterColorId(){
+      this.loadProducts();
+    },
+
     countProducts(){
       this.page = 1;
     }

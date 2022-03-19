@@ -48,7 +48,8 @@
 
 <script>
 import numberFormat from "@/helpers/numberFormat";
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
+
 
 export default {
   filters: { numberFormat },
@@ -66,7 +67,10 @@ export default {
       },
     },
   },
+
   methods: {
+    ...mapActions(['deleteProductFromCart']),
+
     cartProductLess() {
       if (this.amount <= 1) {
         return;
@@ -74,7 +78,11 @@ export default {
       return this.amount--;
     },
 
-    ...mapMutations({deleteProduct: 'deleteCartProduct'}),
+    deleteProduct(){
+      this.deleteProductFromCart(state.cartProducts = state.cartProducts.filter(item => item.productId !== productId))
+     
+    },
+    
   }
 };
 </script>

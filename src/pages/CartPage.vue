@@ -58,6 +58,7 @@
 
     computed: {
       ...mapGetters({products: 'cartDetailProducts', totalPrice: 'cartTotalPrice', totalAmount: 'cartTotalAmount'})
-    }
+    },
+
   }
 </script>

@@ -23,10 +23,6 @@ export default new Vuex.Store({
             }
         },
 
-        deleteCartProduct(state, productId){
-            state.cartProducts = state.cartProducts.filter(item => item.productId !== productId);
-        },
-
         updateUserAccessKey(state,accessKey){
             state.userAccessKey = accessKey;
         },
@@ -128,9 +124,9 @@ export default new Vuex.Store({
             })
         },
 
-        deleteCartProduct(context, {productId}){
+        deleteProductFromCart(context, productId){
             return axios
-                .delete(API_BASE_URL + '/api/baskets/products', {
+                .post(API_BASE_URL + '/api/baskets/products', {
                     productId: productId,
                 },{
                     params: {
@@ -140,10 +136,8 @@ export default new Vuex.Store({
 
                 .then(response => {
                     context.commit('updateCartProductData', response.data.items);
-                })
-                .catch(() => {
                     context.commit('syncCartProducts');
                 })
-        }
+        },
     }
 });

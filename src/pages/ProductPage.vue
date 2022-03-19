@@ -253,6 +253,7 @@ export default {
 
   methods: {
     ...mapActions(['addProductToCart']),
+    ...mapActions(['deleteCartProduct']),
 
     gotoPage,
     

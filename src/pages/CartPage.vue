@@ -48,7 +48,7 @@
 </template>
 <script>
   import numberFormat from '@/helpers/numberFormat';
-  import { mapGetters } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
   import CartItem from '@/components/CartItem.vue'
 
   export default {
@@ -59,6 +59,14 @@
     computed: {
       ...mapGetters({products: 'cartDetailProducts', totalPrice: 'cartTotalPrice', totalAmount: 'cartTotalAmount'})
     },
+
+    methods: {
+        deleteFromCart(){
+          this.deleteProductFromCart({productId: this.item.productId})
+    },
+
+    ...mapActions(['deleteProductFromCart']),
+    }
 
   }
 </script>

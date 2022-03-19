@@ -126,7 +126,7 @@ export default new Vuex.Store({
 
         deleteProductFromCart(context, productId){
             return axios
-                .post(API_BASE_URL + '/api/baskets/products', {
+                .delete(API_BASE_URL + '/api/baskets/products', {
                     productId: productId,
                 },{
                     params: {

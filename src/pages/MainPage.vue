@@ -14,6 +14,10 @@
       />
 
       <section class="catalog">
+
+        <div v-if="productsLoading">Загрузка товаров...</div>
+        <div v-if="productsLoadingFailed"><img src="http://47-3.s.cdn13.com/suspended.jpg" alt="error"><button @click.prevent="loadProducts">Попробовать еще раз</button></div>
+
         <ProductList :products='products'/>
 
         <BasePagination
@@ -30,7 +34,7 @@ import ProductList from "@/components/ProductList.vue";
 import BasePagination from "@/components/BasePagination.vue";
 import ProductFilter from "@/components/ProductFilter.vue";
 import axios from 'axios';
-import API_BASE_URL from "../config";
+import { API_BASE_URL } from "../config";
 
 export default {
   
@@ -46,6 +50,8 @@ export default {
       productsPerPage: 3,
 
       productsData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
   computed: {
@@ -67,8 +73,11 @@ export default {
 
   methods: {
     loadProducts(){
-      console.log(API_BASE_URL);
-      axios
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
+      clearTimeout(this.loadProductsTimer);
+      this.loadProductsTimer = setTimeout(() => {
+         axios
         .get(API_BASE_URL + "/api/products", {
           params: {
             page: this.page,
@@ -79,9 +88,13 @@ export default {
             colorId: this.filterColorId,
           }
         })
-        .then(response => this.productsData = response.data);
+        .then(response => this.productsData = response.data)
+        .catch(() => this.productsLoadingFailed = true)
+        .then(() => this.productsLoading = false);
+      },0)
     }
   },
+
   created() {
     this.loadProducts();
   },

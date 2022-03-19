@@ -27,7 +27,7 @@
               <li class="colors__item" v-for="color in colors" :key="color.id">
                 <label class="colors__label">
                   <input class="colors__radio sr-only" type="radio" name="color" :value="color.id" checked="" v-model.number="currentColorId">
-                  <span class="colors__value" :style="color.style">
+                  <span class="colors__value" :style="{ 'background-color' : color.code }">
                   </span>
                 </label>
               </li>
@@ -137,7 +137,7 @@
 
 <script>
     import axios from "axios";
-    import API_BASE_URL from "../config";
+    import { API_BASE_URL } from "../config";
 
     export default {
       

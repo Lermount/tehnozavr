@@ -1,7 +1,7 @@
 <template>
     <div class="cart__block">
           <ul class="cart__orders">
-           <CartOrderItem v-for="product in $store.getters.cartDetailProducts" :key="product.id" />
+           <CartOrderItem/>
           </ul>
 
           <div class="cart__total">

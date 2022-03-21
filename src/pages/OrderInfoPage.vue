@@ -86,7 +86,9 @@
 import CartOrderBlock from "@/components/CartOrderBlock.vue";
 
 export default {
+
     components: { CartOrderBlock },
+    props:["cartItem"],
     created(){
         if(this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) {
             return;

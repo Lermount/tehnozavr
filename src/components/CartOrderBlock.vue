@@ -1,7 +1,7 @@
 <template>
     <div class="cart__block">
           <ul class="cart__orders">
-           <CartOrderItem/>
+           <CartOrderItem v-for="(item,index) in $store.state.cartProductsData" :key="index" :cart-item="item"/>
           </ul>
 
           <div class="cart__total">

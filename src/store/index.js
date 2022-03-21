@@ -14,6 +14,8 @@ export default new Vuex.Store({
         cartProductsData: [],
 
         orderInfo: null,
+
+        checkOrder: [],
     },
 
     mutations: {
@@ -24,7 +26,7 @@ export default new Vuex.Store({
 
         resetCart(state) {
             state.cartProducts = [];
-            state.cartProductsData = [];
+           
         },
 
         updateCartProductAmount(state, { productId, amount }) {

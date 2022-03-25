@@ -20,7 +20,7 @@
         </svg>
       </button>
 
-      <input type="number" pattern="^[ 0-9]+$" v-model.number="amount" name="count" />
+      <input type="text" pattern="^[1-9]\d*$" v-model.number="amount" name="count" />
 
       <button type="button" aria-label="Добавить один товар" @click="amount++">
         <svg width="10" height="10" fill="currentColor">
@@ -69,8 +69,6 @@ export default {
   },
 
   methods: {
-
-  
 
     cartProductLess() {
       if (this.amount <= 1) {

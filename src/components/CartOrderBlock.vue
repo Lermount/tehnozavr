@@ -6,10 +6,10 @@
 
           <div class="cart__total">
             <p>Доставка: <b>500 ₽</b></p>
-            <p>Итого: <b>{{ $store.getters.cartTotalAmont }}</b> товара на сумму <b>{{ $store.getters.cartTotalPrice}} ₽</b></p>
+            <p>Итого: <b>{{ $store.getters.cartTotalAmont }}</b> товара на сумму <b v-if="this.$route.name === 'order'">{{ $store.getters.cartTotalPrice}} ₽</b><b v-if="this.$route.name === 'orderInfo'">{{ $store.state.orderInfo.totalPrice}} ₽</b></p>
           </div>
 
-          <button class="cart__button button button--primery" type="submit">
+          <button v-show="this.$route.name === 'order'" class="cart__button button button--primery" type="submit">
             Оформить заказ
           </button>
         </div>
@@ -19,8 +19,11 @@
 import CartOrderItem from "@/components/CartOrderItem.vue";
 import numberFormat from '@/helpers/numberFormat';
 
+
+
 export default {
-    components: {CartOrderItem},
+    components: {CartOrderItem, },
     filters: { numberFormat },
+    
 }
 </script>
